@@ -1,0 +1,93 @@
+@model List<carsabm.Models.Car>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h3>Cars</h3>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>Color</th>
+                        @if (ViewBag.GuessedPrice)
+                        {
+                            <th>Price</th>
+                        }
+
+                        <th>Guess Price</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var car in Model)
+                    {
+                        <tr>
+                            <td>@car.Make</td>
+                            <td>@car.Model</td>
+                            <td>@car.Year</td>
+                            <td><span style="background-color: @car.Color; width: 20px; height: 20px; display: inline-block;"></span></td>
+
+                            @if (ViewBag.GuessedPrice)
+                            {
+                                <td>$@car.Price</td>
+                            }
+
+                            <td><input type="number" id="price-@car.Id" name="price" /></td>
+
+                            <td>
+                                <button type="button" class="btn btn-secondary" onclick="guessPrice('@car.Id')">Guess Price</button>
+       
+                            </td>
+
+                            <td>
+                                <a asp-controller="Car" asp-action="Editor" asp-route-id="@car.Id"> <button type="button" class="btn btn-primary">Edit</button></a>
+                                <a asp-controller="Car" asp-action="Delete" asp-route-id="@car.Id"> <button type="button" class="btn btn-danger" >Delete</button></a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-controller="Car" asp-action="Restart" class="btn btn-primary">Restart Game</a>
+            <a asp-controller="Car" asp-action="ShowPrices" class="btn btn-primary">Show Prices</a>
+            <a asp-controller="Car" asp-action="Editor" class="btn btn-primary">New Car</a>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+
+    function guessPrice(id) {
+        var price = document.getElementById(`price-${id}`).value;
+        fetch(`/Car/GuessPrice/${id}?guess=${price}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data == true) {
+                    alert(`Congratulations...the estimated price of the car is in the range price`);
+                       window.location.href = '@Url.Action("Index", "Car")';
+                } else {
+                    alert("Could not guess the price of the car.");
+                }
+            })
+            .catch(error => console.error(error));
+    }
+
+
+</script>

@@ -1,0 +1,85 @@
+@model carsabm.Models.Car
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Create Auto" : "Edit Auto";
+}
+
+<h3>@ViewData["Title"]</h3>
+
+
+<form asp-controller="Car" asp-action="@((Model.Id != 0) ? "Edit" : "Create")" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Make" class="control-label"></label>
+        <select asp-for="Make" class="form-control">
+            <option value="">Select a make</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Ford">Ford</option>
+            <option value="Chevrolet">Chevrolet</option>
+            <option value="Honda">Honda</option>
+        </select>
+        <span asp-validation-for="Make" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Model" class="control-label"></label>
+        <select asp-for="Model" class="form-control">
+            <option value="">Select a model</option>
+            <option value="Corolla">Corolla</option>
+            <option value="Camry">Camry</option>
+            <option value="Focus">Focus</option>
+            <option value="Mustang">Mustang</option>
+            <option value="Camaro">Camaro</option>
+            <option value="Civic">Civic</option>
+            <option value="Accord">Accord</option>
+        </select>
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Year">Year</label>
+        <select asp-for="Year" class="form-control">
+            <option value="">Select fabrication year</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2023">2020</option>
+            <option value="2022">2019</option>
+            <option value="2021">2018</option>
+        </select>
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Doors">Doors</label>
+        <select asp-for="Doors" class="form-control">
+            <option value="">Select doors</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <span asp-validation-for="Doors" class="text-danger"></span>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Color">Color</label>
+        <select asp-for="Color" class="form-control">
+            <option value="">Select a color</option>
+            <option value="Red">Red</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Silver">Silver</option>
+            <option value="Gray">Gray</option>
+            <span asp-validation-for="Color" class="text-danger"></span>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">@((Model.Id != 0) ? "Update" : "Save")</button>
+
+</form>
